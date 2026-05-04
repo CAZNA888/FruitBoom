@@ -79,6 +79,13 @@ function completeProgressBarFilling() {
     }, 500)
 }
 
+function hidePreloader() {
+    const preloader = document.getElementById('preloader')
+    if (preloader) {
+        preloader.style.display = 'none'
+    }
+}
+
 window.addEventListener('pointerdown', () => {
     window.focus()
     CANVAS.focus()
@@ -126,6 +133,7 @@ function initializeBridge() {
     bridge
         .initialize()
         .then(() => {
+            hidePreloader()
             bridge.game.setLoadingProgress(0)
             bridge.advertisement.on('banner_state_changed', state => sendMessageToUnity('OnBannerStateChanged', state))
             bridge.advertisement.on('interstitial_state_changed', state => sendMessageToUnity('OnInterstitialStateChanged', state))
@@ -136,14 +144,14 @@ function initializeBridge() {
             bridge.platform.on('pause_state_changed', isPaused => sendMessageToUnity('OnPauseStateChanged', isPaused.toString()))
 
             let unityLoader = document.createElement('script')
-            unityLoader.src = 'Build/Fruit_PL.loader.js'
+            unityLoader.src = 'Build/Fruit_VK.loader.js'
             unityLoader.onload = () => {
                 createUnityInstance(
                     CANVAS,
                     {
-                        dataUrl: 'Build/Fruit_PL.data.unityweb',
-                        frameworkUrl: 'Build/Fruit_PL.framework.js.unityweb',
-                        codeUrl: 'Build/Fruit_PL.wasm.unityweb',
+                        dataUrl: 'Build/Fruit_VK.data.unityweb',
+                        frameworkUrl: 'Build/Fruit_VK.framework.js.unityweb',
+                        codeUrl: 'Build/Fruit_VK.wasm.unityweb',
                         streamingAssetsUrl: 'StreamingAssets',
                         companyName: 'DefaultCompany',
                         productName: 'Fruit Merge',
